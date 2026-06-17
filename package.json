@@ -1,0 +1,30 @@
+{
+  "name": "npm-slowmo",
+  "version": "1.0.0",
+  "description": "Wrap any async function with realistic latency distributions - test how your app survives slow, unpredictable dependencies",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "node build.js",
+    "test": "node test.js"
+  },
+  "keywords": ["latency", "testing", "chaos", "distributed-systems", "mock", "slow", "p99", "resilience", "fault-tolerance"],
+  "author": "Arnav Gupta <ag_arnav@outlook.com>",
+  "license": "MIT",
+  "files": ["dist", "README.md"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arnnnavvvvv/npm-slowmo.git"
+  },
+  "homepage": "https://github.com/arnnnavvvvv/npm-slowmo#readme",
+  "bugs": {
+    "url": "https://github.com/arnnnavvvvv/npm-slowmo/issues"
+  }
+}

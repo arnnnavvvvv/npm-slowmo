@@ -1,6 +1,5 @@
 /**
- * npm-slowmo
- * Realistic latency simulation for any async function.
+ * slowdep: realistic latency simulation for async functions
  * Wraps dependencies with production-accurate p50/p95/p99 distributions.
  */
 
@@ -55,13 +54,13 @@ export function withLatency(fn, profile) {
   if (typeof profile === 'string') {
     if (!presets[profile]) {
       throw new Error(
-        `slowmo: unknown preset "${profile}". Available: ${Object.keys(presets).join(', ')}`
+        `slowdep: unknown preset "${profile}". Available: ${Object.keys(presets).join(', ')}`
       );
     }
     config = presets[profile];
   } else if (typeof profile === 'object' && profile !== null) {
     if (!profile.p50 || !profile.p99) {
-      throw new Error('slowmo: custom profile requires at least { p50, p99 }');
+      throw new Error('slowdep: custom profile requires at least { p50, p99 }');
     }
     config = {
       p50: profile.p50,
@@ -70,15 +69,15 @@ export function withLatency(fn, profile) {
       errorRate: profile.errorRate ?? 0,
     };
   } else {
-    throw new Error('slowmo: profile must be a preset name or { p50, p95, p99 }');
+    throw new Error('slowdep: profile must be a preset name or { p50, p95, p99 }');
   }
 
-  return async function slowmoWrapped(...args) {
+  return async function slowdepWrapped(...args) {
     const delay = sampleLatency(config.p50, config.p99);
     await sleep(delay);
 
     if (config.errorRate > 0 && Math.random() < config.errorRate) {
-      throw new Error(`slowmo: simulated transient error (errorRate=${config.errorRate})`);
+      throw new Error(`slowdep: simulated transient error (errorRate=${config.errorRate})`);
     }
 
     return fn.apply(this, args);
@@ -97,7 +96,7 @@ export function withLatencyAll(obj, profile) {
   return wrapped;
 }
 
-export async function slowmoDelay(profile) {
+export async function slowdepDelay(profile) {
   const noop = async () => {};
   const wrapped = withLatency(noop, profile);
   await wrapped();

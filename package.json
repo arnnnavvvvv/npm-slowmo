@@ -1,5 +1,5 @@
 {
-  "name": "npm-slowmo",
+  "name": "slowdep",
   "version": "1.0.0",
   "description": "Wrap any async function with realistic latency distributions - test how your app survives slow, unpredictable dependencies",
   "main": "dist/index.js",
@@ -21,10 +21,10 @@
   "files": ["dist", "README.md"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/arnnnavvvvv/npm-slowmo.git"
+    "url": "https://github.com/arnnnavvvvv/slowdep.git"
   },
-  "homepage": "https://github.com/arnnnavvvvv/npm-slowmo#readme",
+  "homepage": "https://github.com/arnnnavvvvv/slowdep#readme",
   "bugs": {
-    "url": "https://github.com/arnnnavvvvv/npm-slowmo/issues"
+    "url": "https://github.com/arnnnavvvvv/slowdep/issues"
   }
 }

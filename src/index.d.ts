@@ -22,4 +22,4 @@ export declare function withLatencyAll<T extends object>(
   profile: PresetName | LatencyProfile
 ): T;
 
-export declare function slowmoDelay(profile: PresetName | LatencyProfile): Promise<void>;
+export declare function slowdepDelay(profile: PresetName | LatencyProfile): Promise<void>;

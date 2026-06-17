@@ -1,9 +1,9 @@
-# npm-slowmo
+# slowdep
 
 > Wrap any async function with realistic latency. Test how your app survives slow, unpredictable dependencies.
 
 ```bash
-npm install npm-slowmo
+npm install slowdep
 ```
 
 ---
@@ -18,7 +18,7 @@ await new Promise(r => setTimeout(r, 200)); // simulate DB
 
 Real databases don't work like that. In production, your Postgres instance responds in 5ms most of the time, 200ms occasionally, and 2000ms when something's wrong. A flat 200ms delay doesn't test the case that actually breaks your app — the variance.
 
-**`slowmo` samples from a lognormal distribution fitted to your p50/p99 targets.** That's the same statistical shape real production systems follow: fast most of the time, occasionally slow, rarely very slow.
+**`slowdep` samples from a lognormal distribution fitted to your p50/p99 targets.** That's the same statistical shape real production systems follow: fast most of the time, occasionally slow, rarely very slow.
 
 ---
 
@@ -27,7 +27,7 @@ Real databases don't work like that. In production, your Postgres instance respo
 ### Drop-in preset
 
 ```js
-import { withLatency } from 'npm-slowmo';
+import { withLatency } from 'slowdep';
 
 const findUser = async (id) => db.query('SELECT * FROM users WHERE id = $1', [id]);
 
@@ -50,7 +50,7 @@ const slowFetch = withLatency(fetchExternalAPI, {
 ### Wrap an entire client
 
 ```js
-import { withLatencyAll } from 'npm-slowmo';
+import { withLatencyAll } from 'slowdep';
 
 const slowRedis = withLatencyAll(redisClient, 'redis');
 
@@ -61,9 +61,9 @@ await slowRedis.set('k', 'v'); // also slow
 ### Standalone delay
 
 ```js
-import { slowmoDelay } from 'npm-slowmo';
+import { slowdepDelay } from 'slowdep';
 
-await slowmoDelay('stripe');
+await slowdepDelay('stripe');
 // continues after a Stripe-realistic delay
 ```
 
@@ -92,7 +92,7 @@ Built-in profiles based on real-world p50/p95/p99 data:
 
 Latency distributions in distributed systems are right-skewed: most requests are fast, but a long tail of slow requests exists due to GC pauses, cold caches, network jitter, and noisy neighbors. The lognormal distribution captures this shape accurately.
 
-`slowmo` fits a lognormal curve to your p50 and p99 values, so every sampled delay reflects the statistical reality of production traffic — not a flat number that gives you false confidence.
+`slowdep` fits a lognormal curve to your p50 and p99 values, so every sampled delay reflects the statistical reality of production traffic — not a flat number that gives you false confidence.
 
 ---
 
@@ -109,7 +109,7 @@ Wraps an async function. Returns a function with the identical signature.
 
 Wraps every async method on an object with the same profile. Non-function properties are preserved.
 
-### `slowmoDelay(profile)`
+### `slowdepDelay(profile)`
 
 Returns a `Promise<void>` that resolves after a realistic delay. No function needed.
 
@@ -118,7 +118,7 @@ Returns a `Promise<void>` that resolves after a realistic delay. No function nee
 The raw preset config object — import and inspect or extend:
 
 ```js
-import { presets } from 'npm-slowmo';
+import { presets } from 'slowdep';
 console.log(presets.postgres); // { p50: 5, p95: 50, p99: 200, errorRate: 0.001 }
 ```
 
@@ -129,7 +129,7 @@ console.log(presets.postgres); // { p50: 5, p95: 50, p99: 200, errorRate: 0.001 
 Full types included. No `@types/` package needed.
 
 ```ts
-import { withLatency, LatencyProfile, PresetName } from 'npm-slowmo';
+import { withLatency, LatencyProfile, PresetName } from 'slowdep';
 
 const profile: LatencyProfile = { p50: 50, p99: 500, errorRate: 0.005 };
 const slowFn = withLatency(myFn, profile);

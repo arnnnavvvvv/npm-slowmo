@@ -5,7 +5,7 @@
 ```bash
 npm install slowdep
 ```
-
+[![npm](https://img.shields.io/npm/dt/slowdep?color=brightgreen&label=downloads)](https://www.npmjs.com/package/slowdep)
 ---
 
 ## The problem with `setTimeout`
